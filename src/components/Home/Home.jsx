@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Loader } from '../Loader/Loader';
-import { HomeSection, HomeTittle, HomeList } from './Home.styled';
+import { HomeSection, HomeTittle } from './Home.styled';
 const URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '2aeb67ea92a5fcd35004195f81b34bb6';
 

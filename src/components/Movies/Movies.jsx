@@ -16,9 +16,8 @@ const Movies = () => {
   const [searchesMovies, setSearchesMovies] = useState(null);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useSearchParams();
-  const query = searchQuery.get('query') ?? '';
+  searchQuery.get('query');
   const location = useLocation();
-
   const handleChange = event => {
     setSearch(event.currentTarget.value);
   };
@@ -29,7 +28,7 @@ const Movies = () => {
       Notify.failure('Please enter the search field.');
       return;
     }
-    setSearchQuery({ query: search });
+    setSearchQuery(search !== '' ? { query: search } : {});
     setLoading(true);
     fetch(
       `${URL}search/movie?api_key=${API_KEY}&query=${search}&language=en-US`
@@ -44,7 +43,6 @@ const Movies = () => {
       })
       .catch(error => console.log(error))
       .finally(() => setSearch(''), setLoading(false));
-    setSearch('');
   };
 
   return (
@@ -62,7 +60,7 @@ const Movies = () => {
           <SearchMovieBtn type="submit">Search</SearchMovieBtn>
         </SearchMovieForm>
       )}
-       {loading && <Loader />}
+      {loading && <Loader />}
       <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
