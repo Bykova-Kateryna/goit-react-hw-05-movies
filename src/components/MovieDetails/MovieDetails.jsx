@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import {
   GoBackButton,
@@ -42,7 +42,11 @@ const MovieDetails = () => {
           <MovieDetailsContainer>
             <div>
               <img
-                src={movieDetails.poster_path ? `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}` : `https://i.kym-cdn.com/photos/images/original/002/020/910/1b5.jpg`}
+                src={
+                  movieDetails.poster_path
+                    ? `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`
+                    : `https://i.kym-cdn.com/photos/images/original/002/020/910/1b5.jpg`
+                }
                 alt={movieDetails.original_title}
                 width={600}
               />
@@ -56,7 +60,11 @@ const MovieDetails = () => {
               <MovieDetailsInfoOverviewTittle>
                 Overview
               </MovieDetailsInfoOverviewTittle>
-              <p>{movieDetails.overview !== "" ? movieDetails.overview : 'There are no reviews'}</p>
+              <p>
+                {movieDetails.overview !== ''
+                  ? movieDetails.overview
+                  : 'There are no reviews'}
+              </p>
               <MovieDetailsInfoGenresTittle>
                 Genres
               </MovieDetailsInfoGenresTittle>
@@ -67,15 +75,27 @@ const MovieDetails = () => {
             <p>Additional Information</p>
             <MovieAdditionalInfoList>
               <li>
-                <Link to={`/movies/${movieId}/cast`}>Cast</Link>
+                <Link
+                  to={`/movies/${movieId}/cast`}
+                  state={{ from: location.state.from }}
+                >
+                  Cast
+                </Link>
               </li>
               <li>
                 {' '}
-                <Link to={`/movies/${movieId}/reviews`}>Reviews</Link>
+                <Link
+                  to={`/movies/${movieId}/reviews`}
+                  state={{ from: location.state.from }}
+                >
+                  Reviews
+                </Link>
               </li>
             </MovieAdditionalInfoList>
           </MovieAdditionalInfo>
-          <Outlet />
+          <Suspense fallback={<Loader />}>
+            <Outlet />
+          </Suspense>
         </MovieDetailsSection>
       )}
     </>
