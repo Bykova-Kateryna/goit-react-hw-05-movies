@@ -17,7 +17,7 @@ const URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '2aeb67ea92a5fcd35004195f81b34bb6';
 
 const MovieDetails = () => {
-  const [MovieDetails, setMovieDetails] = useState(null);
+  const [movieDetails, setMovieDetails] = useState(null);
   const [loading, setLoading] = useState(false);
   const { movieId } = useParams();
   const location = useLocation();
@@ -33,7 +33,7 @@ const MovieDetails = () => {
   return (
     <>
       {loading && <Loader />}
-      {MovieDetails && (
+      {movieDetails && (
         <MovieDetailsSection>
           <GoBackButton to={location.state?.from ?? '/'}>
             {' '}
@@ -42,25 +42,25 @@ const MovieDetails = () => {
           <MovieDetailsContainer>
             <div>
               <img
-                src={`https://image.tmdb.org/t/p/w500${MovieDetails.poster_path}`}
-                alt={MovieDetails.original_title}
-                width={650}
+                src={movieDetails.poster_path ? `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}` : `https://i.kym-cdn.com/photos/images/original/002/020/910/1b5.jpg`}
+                alt={movieDetails.original_title}
+                width={600}
               />
             </div>
             <MovieDetailsInfo>
               <MovieDetailsInfoTittle>
-                {MovieDetails.original_title} ({' '}
-                {dateRelise.getFullYear(MovieDetails.release_date)} )
+                {movieDetails.original_title} ({' '}
+                {dateRelise.getFullYear(movieDetails.release_date)} )
               </MovieDetailsInfoTittle>
-              <p>User Score: {Math.round(MovieDetails.vote_average * 10)}%</p>
+              <p>User Score: {Math.round(movieDetails.vote_average * 10)}%</p>
               <MovieDetailsInfoOverviewTittle>
                 Overview
               </MovieDetailsInfoOverviewTittle>
-              <p>{MovieDetails.overview}</p>
+              <p>{movieDetails.overview !== "" ? movieDetails.overview : 'There are no reviews'}</p>
               <MovieDetailsInfoGenresTittle>
                 Genres
               </MovieDetailsInfoGenresTittle>
-              <p>{MovieDetails.genres.map(ganre => ganre.name).join(', ')}</p>
+              <p>{movieDetails.genres.map(ganre => ganre.name).join(', ')}</p>
             </MovieDetailsInfo>
           </MovieDetailsContainer>
           <MovieAdditionalInfo>

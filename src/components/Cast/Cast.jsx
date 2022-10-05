@@ -5,7 +5,7 @@ const URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '2aeb67ea92a5fcd35004195f81b34bb6';
 
 const Cast = () => {
-  const [cast, setCast] = useState(null);
+  const [cast, setCast] = useState([]);
   const { movieId } = useParams();
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const Cast = () => {
 
   return (
     <>
-      {cast && (
+      {cast.length !== 0 ? (
         <CastSection>
           <ul>
             {cast.map(info => (
@@ -35,6 +35,10 @@ const Cast = () => {
               </CastItem>
             ))}
           </ul>
+        </CastSection>
+      ) : (
+        <CastSection>
+          <p>NO CAST MEMBERS</p>
         </CastSection>
       )}
     </>

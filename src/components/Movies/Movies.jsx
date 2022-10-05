@@ -1,6 +1,7 @@
 import { Suspense, useState } from 'react';
 import { Link, useLocation, useSearchParams, Outlet } from 'react-router-dom';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { Report } from 'notiflix/build/notiflix-report-aio';
 import {
   SearchMovieForm,
   SearchMovieBtn,
@@ -36,7 +37,11 @@ const Movies = () => {
       .then(response => response.json())
       .then(data => {
         if (data.total_results === 0) {
-          console.log('NOT FOUND');
+          Report.info(
+            `${search} not found.`,
+            'Please enter another movie.',
+            'Okay'
+          );
           return;
         }
         setSearchesMovies(data.results);

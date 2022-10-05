@@ -24,16 +24,18 @@ const Reviews = () => {
       {reviews.length !== 0 ? (
         <ReviewsSection>
           <ul>
-            {reviews.map(rev => (
-              <ReviewsItem key={rev.id}>
-                <ReviewsItemTittle>{rev.author}</ReviewsItemTittle>
-                <ReviewsItemDescription>{rev.content}</ReviewsItemDescription>
+            {reviews.map(review => (
+              <ReviewsItem key={review.id}>
+                <ReviewsItemTittle>{review.author}</ReviewsItemTittle>
+                <ReviewsItemDescription>{review.content}</ReviewsItemDescription>
               </ReviewsItem>
             ))}
           </ul>
         </ReviewsSection>
       ) : (
-        <p>We don't have any reviews for this movie.</p>
+        <ReviewsSection>
+          <p>We don't have any reviews for this movie.</p>
+        </ReviewsSection>
       )}
     </>
   );
